@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MANNA — Sabbath Bible Lesson · parallel languages</title>
+<meta name="description" content="The daily Sabbath Bible Lesson in two languages side by side — with the full Bible text, from sbl.sdarm.org.">
+<style>
+:root{
+  --bg:#17151140; --page:#151310; --card:#232019; --line:#3a352c; --hair:#2a2620;
+  --ink:#e4e0d6; --ink-soft:#bdb8ab; --dim:#8c877b; --faint:#615c52;
+  --accent:#c6a15b; --accent-dk:#a07f39; --accent-sf:#dcc188; --on-accent:#191307;
+  --scripture:#ece7da; --verse-bg:rgba(198,161,91,.09);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#141210;color:var(--ink);
+  font-family:"SF Pro Text",-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1400px 800px at 50% -300px,#2a241a,#121110 60%);min-height:100vh}
+a{color:var(--accent-sf)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* header */
+header{text-align:center;padding:52px 0 8px}
+.wordmark{font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:14px;color:#ece7da;padding-left:14px}
+.tagline{color:var(--accent);font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-top:12px}
+
+/* controls */
+.controls{position:sticky;top:0;z-index:5;background:rgba(20,18,16,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hair);margin-top:28px}
+.controls .row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 18px;padding:14px 24px;max-width:1180px;margin:0 auto}
+.daynav{display:flex;align-items:center;gap:6px}
+.arrow{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;
+  background:var(--card);color:var(--accent);font-size:22px;cursor:pointer;user-select:none;border:1px solid var(--line)}
+.arrow:hover{background:var(--accent);color:var(--on-accent)}
+.date{min-width:210px;text-align:center;cursor:pointer;padding:4px 8px;border-radius:10px}
+.date:hover{background:var(--card)}
+.date .d{font-size:16px;font-weight:600;text-transform:capitalize}
+.date .s{font-size:10px;letter-spacing:2px;color:var(--faint);margin-top:1px}
+.date.today .s{color:var(--accent);font-weight:700}
+.pickset{display:flex;align-items:center;gap:8px}
+.pickset .pk-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint)}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg .o{padding:7px 12px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--dim);cursor:pointer}
+.seg .o.active{background:var(--accent);color:var(--on-accent)}
+.swap{width:36px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;
+  background:var(--card);border:1px solid var(--line);color:var(--accent);cursor:pointer;font-size:15px}
+.swap:hover{background:var(--accent);color:var(--on-accent)}
+
+/* columns */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:36px;padding:34px 0 80px}
+.col{min-width:0}
+.msg{grid-column:1 / -1;text-align:center;color:var(--faint);padding:80px 20px}
+.msg.err{color:#c98}
+
+.kick{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.title{font-family:var(--serif);font-size:26px;font-weight:600;line-height:1.2;margin-bottom:16px}
+.mem{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:24px}
+.mem .l{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.mem .t{font-family:var(--serif);font-size:17px;line-height:1.55;color:var(--scripture)}
+.mem .r{font-size:12px;font-weight:600;color:var(--accent-sf);margin-top:8px}
+.section{font-size:16px;font-weight:700;margin:6px 0 18px;padding-bottom:10px}
+.section::after{content:"";display:block;width:38px;height:2px;margin-top:10px;background:var(--accent-dk);border-radius:2px}
+.qa{margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--hair)}
+.qa:last-child{border-bottom:none}
+.q{font-size:16px;font-weight:600;line-height:1.5;margin-bottom:11px}
+.vref{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.verse{background:var(--verse-bg);border-left:2px solid var(--accent);border-radius:0 7px 7px 0;padding:12px 15px;margin-bottom:11px;
+  font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--scripture)}
+.vnum{font-family:-apple-system,sans-serif;font-weight:700;font-size:10px;color:var(--accent);vertical-align:4px;margin:0 4px 0 1px}
+.note{position:relative;font-size:14.5px;line-height:1.62;color:var(--dim);padding-left:15px;margin-top:11px}
+.note::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:1px;background:var(--line)}
+.review{font-size:15px;color:var(--ink-soft);line-height:1.55;margin-bottom:13px}
+.reading{font-size:14px;color:var(--dim);margin-top:10px}
+.reading b{color:var(--ink-soft)}
+
+footer{text-align:center;color:var(--faint);font-size:12px;padding:26px 0 40px;border-top:1px solid var(--hair)}
+footer a{text-decoration:none}
+
+@media (max-width:820px){
+  .cols{grid-template-columns:1fr;gap:8px}
+  .col{border-bottom:1px solid var(--hair);padding-bottom:24px;margin-bottom:16px}
+  .wordmark{font-size:34px;letter-spacing:8px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">MANNA</div>
+  <div class="tagline">Sabbath Bible Lesson · two languages, side by side</div>
+</header>
+
+<div class="controls">
+  <div class="row">
+    <div class="daynav">
+      <div class="arrow" id="prev" title="Previous day">‹</div>
+      <div class="date" id="date" title="Jump to today"><div class="d" id="date-d">—</div><div class="s" id="date-s"></div></div>
+      <div class="arrow" id="next" title="Next day">›</div>
+    </div>
+    <div class="pickset">
+      <span class="pk-label">Left</span>
+      <div class="seg" id="seg-left"></div>
+      <div class="swap" id="swap" title="Swap sides">⇄</div>
+      <span class="pk-label">Right</span>
+      <div class="seg" id="seg-right"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="cols" id="cols">
+    <div class="msg" id="loading">Loading…</div>
+  </div>
+</div>
+
+<footer>
+  Content © <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> ·
+  Bible text from SDARM editions · an independent reader by
+  <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
+</footer>
+
+<script>
+const LANGS=["de","en","ru"];
+const LOCALE={de:"de-DE",en:"en-US",ru:"ru-RU"};
+const BIBLE={de:"de-lut",en:"en-kjv",ru:"ru-rst"};
+const WORD={
+  key:{de:"Leittext",en:"Key Text",ru:"Памятный стих"},
+  sabbath:{de:"Sabbat",en:"Sabbath",ru:"Суббота"},
+  today:{de:"HEUTE",en:"TODAY",ru:"СЕГОДНЯ"},
+  none:{de:"Für diesen Tag gibt es keine Lektion.",en:"No lesson for this day.",ru:"На этот день урока нет."}
+};
+
+let leftLang = localStorage.getItem("manna.web.left")||"de";
+let rightLang = localStorage.getItem("manna.web.right")||"ru";
+if(leftLang===rightLang) rightLang = leftLang==="de"?"ru":"de";
+let current = new Date();
+
+const quarters={}, bibles={};
+
+function ymd(d){return d.getFullYear()+("0"+(d.getMonth()+1)).slice(-2)+("0"+d.getDate()).slice(-2);}
+function sameDay(a,b){return ymd(a)===ymd(b);}
+function qOf(d){return Math.floor(d.getMonth()/3)+1;}
+function addDays(d,n){const x=new Date(d.getTime());x.setDate(x.getDate()+n);return x;}
+function neigh(y,q){return[[y,q],q===1?[y-1,4]:[y,q-1],q===4?[y+1,1]:[y,q+1]];}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+async function loadQuarter(l,y,q){
+  const key=l+"-"+y+"-"+q;
+  if(quarters[key]) return quarters[key];
+  try{
+    const r=await fetch("https://app.sdarm.org/sbl/data/"+l+"/"+l+"-"+y+"-"+q+".json");
+    if(!r.ok) throw 0;
+    return quarters[key]=await r.json();
+  }catch(e){return quarters[key]=null;}
+}
+async function findDay(d,l){
+  const t=ymd(d);
+  for(const[y,q]of neigh(d.getFullYear(),qOf(d))){
+    const data=await loadQuarter(l,y,q);
+    if(!data||!data.lessons) continue;
+    for(const les of data.lessons){
+      if(les.date===t) return {type:"sabbath",lesson:les};
+      for(const day of les.dailyLessons||[]) if(day.date===t) return {type:"day",lesson:les,day};
+    }
+  }
+  return {type:"none"};
+}
+function loadBible(v){
+  if(bibles[v]) return bibles[v];
+  return bibles[v]=fetch("https://app.sdarm.org/bible/data/"+v+".json").then(r=>r.json()).catch(e=>{bibles[v]=null;return null;});
+}
+function parseSeg(s){const d=s.split("-");const a=d[0].split(".");const b=(d[1]||d[0]).split(".");
+  return{book:a[0],chap:+a[1],v1:+a[2],echap:+(b[1]||a[1]),v2:+(b[2]||a[2])};}
+function verseHtml(books,sOsis){
+  let out="";
+  for(const raw of String(sOsis).split(",")){
+    const s=parseSeg(raw.trim()); const ch=books&&books[s.book]; if(!ch) continue;
+    for(let c=s.chap;c<=s.echap;c++){
+      const vs=ch[c-1]; if(!vs) continue;
+      const from=c===s.chap?s.v1:1, to=c===s.echap?s.v2:vs.length;
+      for(let n=from;n<=to;n++){ if(vs[n-1]!=null) out+='<span class="vnum">'+n+'</span>'+esc(String(vs[n-1]).trim())+" "; }
+    }
+  }
+  return out.trim();
+}
+
+function columnHtml(info,l,books){
+  if(info.type==="none") return '<div class="msg">'+esc(WORD.none[l])+'</div>';
+  const les=info.lesson;
+  let h='<div class="kick">'+esc(les.header||"")+'</div><div class="title">'+esc(les.title||"")+'</div>';
+  const kt=les.keyText||{}; const kText=kt.text||les.keyTextVerse||""; const kRef=(kt.ref&&kt.ref.text)||"";
+  if(kText) h+='<div class="mem"><div class="l">'+esc(WORD.key[l])+'</div><div class="t">'+esc(kText)+'</div>'+(kRef?'<div class="r">'+esc(kRef)+'</div>':'')+'</div>';
+  if(info.type==="sabbath"){
+    h+='<div class="section">'+esc(WORD.sabbath[l])+'</div>';
+    if(les.keyNote&&les.keyNote.text) h+='<div class="note">'+esc(les.keyNote.text)+'</div>';
+    const rd=les.reading; if(rd&&rd.reading&&rd.reading.length) h+='<div class="reading"><b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ")+'</div>';
+    return h;
+  }
+  const day=info.day;
+  if(day.sectionTitle) h+='<div class="section">'+esc(day.sectionTitle.trim())+'</div>';
+  for(const sub of day.subsections||[]){
+    h+='<div class="qa">';
+    for(const q of sub.q||[]){
+      if(q.sOsis) h+='<div class="vref">'+esc((q.text||"").trim())+'</div><div class="verse">'+verseHtml(books,q.sOsis)+'</div>';
+      else if(q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
+    }
+    for(const q of sub.question||[]) if(q&&q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
+    for(const n of sub.note||[]) if(n&&n.text) h+='<div class="note">'+esc(n.text)+'</div>';
+    h+='</div>';
+  }
+  for(const q of day.reviewQuestions||[]) if(q) h+='<div class="review">'+esc(q)+'</div>';
+  return h;
+}
+
+function fmtDate(d,l){
+  try{return new Intl.DateTimeFormat(LOCALE[l],{weekday:"long",day:"numeric",month:"long"}).format(d);}
+  catch(e){return ymd(d);}
+}
+
+let token=0;
+async function render(){
+  const my=++token;
+  const isToday=sameDay(current,new Date());
+  document.getElementById("date-d").textContent=fmtDate(current,leftLang);
+  const ds=document.getElementById("date"); ds.classList.toggle("today",isToday);
+  document.getElementById("date-s").textContent=isToday?WORD.today[leftLang]:String(current.getFullYear());
+  buildSegs();
+  const cols=document.getElementById("cols");
+  cols.innerHTML='<div class="msg">Loading…</div>';
+  const [li,ri,lb,rb]=await Promise.all([
+    findDay(current,leftLang), findDay(current,rightLang),
+    loadBible(BIBLE[leftLang]), loadBible(BIBLE[rightLang])
+  ]);
+  if(my!==token) return;
+  const lbBooks=lb&&lb.books, rbBooks=rb&&rb.books;
+  cols.innerHTML='<div class="col">'+columnHtml(li,leftLang,lbBooks)+'</div>'+
+                 '<div class="col">'+columnHtml(ri,rightLang,rbBooks)+'</div>';
+}
+
+function buildSegs(){
+  for(const [id,cur,set] of [["seg-left",leftLang,setLeft],["seg-right",rightLang,setRight]]){
+    const el=document.getElementById(id);
+    el.innerHTML=LANGS.map(x=>'<div class="o'+(x===cur?' active':'')+'" data-l="'+x+'">'+x.toUpperCase()+'</div>').join("");
+    el.querySelectorAll(".o").forEach(o=>o.onclick=()=>set(o.dataset.l));
+  }
+}
+function setLeft(l){ if(l===leftLang)return; if(l===rightLang)rightLang=leftLang; leftLang=l; save(); render(); }
+function setRight(l){ if(l===rightLang)return; if(l===leftLang)leftLang=rightLang; rightLang=l; save(); render(); }
+function save(){ localStorage.setItem("manna.web.left",leftLang); localStorage.setItem("manna.web.right",rightLang); }
+
+document.getElementById("prev").onclick=()=>{current=addDays(current,-1);render();};
+document.getElementById("next").onclick=()=>{current=addDays(current,1);render();};
+document.getElementById("date").onclick=()=>{current=new Date();render();};
+document.getElementById("swap").onclick=()=>{const t=leftLang;leftLang=rightLang;rightLang=t;save();render();};
+
+render();
+</script>
+</body>
+</html>
