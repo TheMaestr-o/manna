@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1c1c1c; --gray:#dcdcdc; --gray-dk:#5a5a5a; --box:#e6e6e6; --muted:#666;
+  --ink:#1c1c1c; --gray:#d1d3d4; --gray-dk:#606162; --box:#e6e6e6; --muted:#666;
   --sans:"PT Sans","Segoe UI",-apple-system,sans-serif;
   --serif:"PT Serif",Georgia,"Times New Roman",serif;
 }
@@ -54,12 +54,13 @@ h1.title{font-weight:700;font-size:58px;line-height:1.02;letter-spacing:-1px;mar
 .quote{font-family:var(--serif);font-size:19px;line-height:1.6;text-align:justify;hyphens:auto;margin-bottom:34px}
 .quote i{font-style:italic}
 
-.sec{position:relative;height:54px;margin:40px 0 22px}
-.sec::before{content:"";position:absolute;inset:0;background:var(--gray);clip-path:polygon(0 0,100% 0,calc(100% - 20px) 100%,0 100%)}
+/* band shape from official vector: rectangle + dark tag (vertical left seam, right edge slanted 8.2deg) */
+.sec{position:relative;height:52px;margin:40px 0 22px}
+.sec::before{content:"";position:absolute;inset:0;background:var(--gray);clip-path:polygon(0 0,100% 0,calc(100% - 7.5px) 100%,0 100%)}
 .sec .t{position:relative;height:100%;display:flex;align-items:center;padding-left:20px;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.2px}
 .sec .t .n{margin-right:24px}
 .sec .day{position:absolute;top:0;bottom:0;right:0;z-index:1;background:var(--gray-dk);color:#fff;display:flex;align-items:center;
-  padding:0 30px 0 50px;font-weight:700;font-size:16px;white-space:nowrap;clip-path:polygon(28px 0,100% 0,calc(100% - 20px) 100%,0 100%)}
+  padding:0 26px;font-weight:700;font-size:18px;white-space:nowrap;clip-path:polygon(0 0,100% 0,calc(100% - 7.5px) 100%,0 100%)}
 
 .q{font-weight:700;font-size:18px;line-height:1.5;text-align:justify;hyphens:auto;margin:0 0 14px;padding-left:26px;text-indent:-26px}
 .note{font-family:var(--serif);font-size:18px;line-height:1.62;text-align:justify;hyphens:auto;margin:0 0 16px}
