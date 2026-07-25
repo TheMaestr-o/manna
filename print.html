@@ -70,7 +70,9 @@ h1.title{font-weight:700;font-size:58px;line-height:1.02;letter-spacing:-1px;mar
 .sec .day{position:absolute;top:0;bottom:0;right:0;z-index:1;background:var(--gray-dk);color:#fff;display:flex;align-items:center;
   padding:0 26px;font-weight:700;font-size:18px;white-space:nowrap;clip-path:polygon(0 0,100% 0,calc(100% - 7.5px) 100%,0 100%)}
 
-.vblock{margin:8px 0 16px;padding:4px 0 5px 20px;border-left:2px solid var(--gray-dk);break-inside:avoid}
+.vgroup{margin:8px 0 16px;padding:3px 0 4px 20px;border-left:2px solid var(--gray-dk)}
+.vitem{break-inside:avoid}
+.vitem + .vitem{margin-top:12px}
 .vref{font-weight:700;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray-dk);margin-bottom:4px}
 .vtext{font-family:var(--serif);font-size:16.5px;line-height:1.58;text-align:justify;hyphens:auto;color:#2b2b2b}
 .vtext .vnum{font-weight:700;font-size:10px;vertical-align:super;line-height:0;margin:0 4px 0 1px;color:var(--gray-dk)}
@@ -86,7 +88,7 @@ footer a{color:#e0d3a8;text-decoration:none}
 @media(max-width:720px){ .page{padding:34px 24px 50px;margin:0} h1.title{font-size:40px} .top .lesson{font-size:18px;padding:10px 24px} }
 @media print{ .bar,footer{display:none} body{background:#fff}
   .page{box-shadow:none;margin:0;max-width:none;overflow:visible} .lesson{top:0}
-  .q,.vblock,.note,.sec,.review,.mem{break-inside:avoid} }
+  .q,.vitem,.note,.sec,.review,.mem{break-inside:avoid} }
 </style>
 </head>
 <body>
@@ -195,9 +197,14 @@ function renderLesson(les,tasks){
     for(const sub of day.subsections||[]){
       const q=questionLine(sub);
       if(q) h+='<div class="q">'+esc(q)+'</div>';
-      if(versesOn) for(const it of (sub.q||[])) if(it&&it.sOsis){ const id="pv"+(vid++); tasks.push([id,it.sOsis]);
-        const ref=strip(it.text||"").replace(/[;,.\s]+$/,"");
-        h+='<div class="vblock">'+(ref?'<div class="vref">'+esc(ref)+'</div>':'')+'<div class="vtext" id="'+id+'"></div></div>'; }
+      if(versesOn){
+        const refs=(sub.q||[]).filter(it=>it&&it.sOsis);
+        if(refs.length){ h+='<div class="vgroup">';
+          for(const it of refs){ const id="pv"+(vid++); tasks.push([id,it.sOsis]);
+            const ref=strip(it.text||"").replace(/[;,.\s]+$/,"");
+            h+='<div class="vitem">'+(ref?'<div class="vref">'+esc(ref)+'</div>':'')+'<div class="vtext" id="'+id+'"></div></div>'; }
+          h+='</div>'; }
+      }
       for(const n of sub.note||[]) if(n&&n.text&&!isJunk(n.text)) h+='<div class="note">'+esc(strip(n.text))+'</div>';
     }
     for(const rq of day.reviewQuestions||[]) if(rq) h+='<div class="review">'+esc(strip(rq))+'</div>';
