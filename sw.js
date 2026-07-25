@@ -1,7 +1,7 @@
 /* MANNA service worker — cache once, then instant (and offline). */
-const SHELL = "manna-shell-v1";
+const SHELL = "manna-shell-v2";
 const DATA  = "manna-data-v1";
-const SHELL_FILES = ["index.html", "dark.html", "codex.html"];
+const SHELL_FILES = ["index.html", "dark.html", "codex.html", "print.html"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(SHELL_FILES)).catch(()=>{}).then(() => self.skipWaiting()));
