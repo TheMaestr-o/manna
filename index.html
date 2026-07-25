@@ -18,7 +18,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;font-weight:300;
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.62;font-weight:300;
   -webkit-font-smoothing:antialiased}
 .wrap{max-width:1120px;margin:0 auto;padding:0 40px}
 a{color:var(--tan-dk);text-decoration:none}
@@ -27,7 +27,7 @@ a:hover{color:var(--ink)}
 /* nav */
 .nav{position:sticky;top:0;z-index:9;background:rgba(244,239,228,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
 .nav-in{max-width:1120px;margin:0 auto;padding:20px 40px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
-.brand{grid-column:2;font-family:var(--display);font-size:23px;font-weight:500;letter-spacing:7px;padding-left:7px;text-align:center}
+.brand{grid-column:2;font-family:var(--display);font-size:26px;font-weight:500;letter-spacing:8px;padding-left:8px;text-align:center}
 .menu{grid-column:3;justify-self:end;display:flex;align-items:center;gap:9px;cursor:pointer;color:var(--soft);
   font-size:12px;letter-spacing:2px;text-transform:uppercase}
 .menu:hover{color:var(--ink)}
@@ -53,55 +53,58 @@ a:hover{color:var(--ink)}
 
 /* hero */
 .hero{text-align:center;padding:64px 0 30px}
-.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:26px}
+.eyebrow{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:28px}
 .daynav{display:inline-flex;align-items:center;gap:20px}
 .arrow{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);
   color:var(--soft);font-size:20px;cursor:pointer;user-select:none;transition:.2s;background:var(--cream)}
 .arrow:hover{border-color:var(--tan);color:var(--tan-dk)}
 .date{cursor:pointer;min-width:230px}
-.date .d{font-family:var(--display);font-size:30px;font-weight:500;text-transform:capitalize;line-height:1.1}
+.date .d{font-family:var(--display);font-size:38px;font-weight:500;text-transform:capitalize;line-height:1.08}
 .date .s{font-size:10.5px;letter-spacing:3px;color:var(--faint);margin-top:8px}
 .date.today .s{color:var(--tan-dk)}
 .hrule{width:44px;height:1px;background:var(--tan);margin:30px auto 0;opacity:.7}
 
-/* columns */
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:20px 0 90px}
-.cols::before{content:"";position:absolute}
-.col{min-width:0}
+/* columns — row-aligned parallel grid (left & right stay level) */
+.cols{display:grid;grid-template-columns:1fr 1fr;column-gap:64px;row-gap:0;padding:24px 0 100px;align-items:start}
+.cell{min-width:0}
+.cell>*:last-child{margin-bottom:0}
+.rowdiv{grid-column:1/-1;height:1px;background:var(--hair);margin:16px 0 36px}
 .msg{grid-column:1/-1;text-align:center;color:var(--faint);padding:70px 20px;font-family:var(--read);font-size:20px;font-style:italic}
 
-.kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:12px;text-align:center}
-.title{font-family:var(--display);font-size:31px;font-weight:500;line-height:1.16;text-align:center;margin-bottom:26px}
+.kick{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:14px;text-align:center}
+.title{font-family:var(--display);font-size:40px;font-weight:500;line-height:1.14;text-align:center;margin-bottom:30px}
 .mem{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-bottom:30px;text-align:center}
-.mem .l{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
-.mem .t{font-family:var(--read);font-size:22px;font-style:italic;line-height:1.5;color:var(--ink)}
+.mem .l{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:13px}
+.mem .t{font-family:var(--read);font-size:27px;font-style:italic;line-height:1.5;color:var(--ink)}
 .mem .r{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--tan-dk);margin-top:14px}
-.section{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--soft);text-align:center;margin:6px 0 26px;
+.section{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--soft);text-align:center;margin:8px 0 30px;
   display:flex;align-items:center;gap:16px}
 .section::before,.section::after{content:"";flex:1;height:1px;background:var(--line)}
 .qa{margin-bottom:34px}
 .qa:not(:last-child){border-bottom:1px solid var(--hair);padding-bottom:34px}
-.q{font-size:15px;font-weight:400;line-height:1.6;color:var(--ink);margin-bottom:16px;letter-spacing:.2px}
-.vref{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:8px;text-align:center}
-.verse{font-family:var(--read);font-size:20px;line-height:1.55;color:var(--ink);padding:4px 6px 4px 0;margin-bottom:12px;
+.q{font-size:17.5px;font-weight:400;line-height:1.62;color:var(--ink);margin-bottom:18px;letter-spacing:.2px}
+.vref{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--tan-dk);margin-bottom:9px;text-align:center}
+.verse{font-family:var(--read);font-size:24px;line-height:1.55;color:var(--ink);padding:4px 6px 4px 0;margin-bottom:14px;
   text-align:justify;hyphens:auto}
 .vnum{font-family:var(--sans);font-weight:500;font-size:10px;color:var(--tan);vertical-align:4px;margin:0 4px 0 1px;letter-spacing:0}
-.note{font-size:14px;line-height:1.7;color:var(--soft);margin-top:14px;text-align:justify;hyphens:auto}
-.review{font-family:var(--read);font-size:19px;line-height:1.5;color:var(--ink);margin-bottom:16px}
+.verse.loading{color:var(--faint);font-style:italic}
+.verse.error{color:#b58}
+.note{font-size:15.5px;line-height:1.72;color:var(--soft);margin-top:16px;text-align:justify;hyphens:auto}
+.review{font-family:var(--read);font-size:22px;line-height:1.5;color:var(--ink);margin-bottom:18px}
 .reading{font-size:14px;color:var(--soft);margin-top:14px;font-style:italic}
 .reading b{font-style:normal;color:var(--ink);font-weight:500}
 
 footer{text-align:center;color:var(--faint);font-size:12px;letter-spacing:.5px;padding:34px 0 50px;border-top:1px solid var(--hair)}
 footer a{color:var(--tan-dk)}
+.foot-ed{display:flex;justify-content:center;gap:16px;margin-bottom:16px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+.foot-ed a{color:var(--faint)}.foot-ed a:hover{color:var(--ink)}
+.foot-ed .cur{color:var(--tan-dk);border-bottom:1px solid var(--tan);padding-bottom:2px}
 
 @media (prefers-reduced-motion:no-preference){
   @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   .hero>*{animation:fade .7s both}
   .eyebrow{animation-delay:.02s}.daynav{animation-delay:.1s}.hrule{animation-delay:.2s}
-  .col{animation:fade .7s both}.col:nth-child(2){animation-delay:.1s}
-  .col .kick{animation:fade .5s .05s both}.col .title{animation:fade .55s .1s both}
-  .col .mem{animation:fade .6s .18s both}.col .section{animation:fade .55s .24s both}
-  .col .qa{animation:fade .55s .3s both}.col .qa:nth-of-type(n+2){animation-delay:.4s}
+  .cell{animation:fade .5s both}
   .arrow,.swap,.seg .o{transition:.2s}
 }
 @media (max-width:820px){
@@ -144,6 +147,7 @@ footer a{color:var(--tan-dk)}
 </div>
 
 <footer>
+  <div class="foot-ed"><span class="cur">Light</span><a href="dark.html">Dark</a><a href="codex.html">Illuminated</a></div>
   Content &copy; <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> &middot;
   Bible text from SDARM editions &middot; an independent reader by
   <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
@@ -206,32 +210,63 @@ function verseHtml(books,sOsis){let out="";
   }
   return out.trim();
 }
-function columnHtml(info,l,books){
-  if(info.type==="none") return '<div class="msg">'+esc(WORD.none[l])+'</div>';
-  const les=info.lesson;
-  let h='<div class="kick">'+esc(les.header||"")+'</div><div class="title">'+esc(les.title||"")+'</div>';
-  const kt=les.keyText||{};const kText=cleanMem(kt.text||les.keyTextVerse||"");const kRef=(kt.ref&&kt.ref.text)||"";
-  if(kText) h+='<div class="mem"><div class="l">'+esc(WORD.key[l])+'</div><div class="t">'+esc(kText)+'</div>'+(kRef?'<div class="r">'+esc(kRef)+'</div>':'')+'</div>';
-  if(info.type==="sabbath"){
-    h+='<div class="section">'+esc(WORD.sabbath[l])+'</div>';
-    if(les.keyNote&&les.keyNote.text) h+='<div class="note">'+esc(les.keyNote.text)+'</div>';
-    const rd=les.reading; if(rd&&rd.reading&&rd.reading.length) h+='<div class="reading"><b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ")+'</div>';
-    return h;
+function readingText(les){const rd=les.reading;
+  if(rd&&rd.reading&&rd.reading.length) return '<b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ");
+  return "";}
+
+// Build a language-independent list of aligned blocks (left & right paired by index)
+function buildBlocks(infoL,infoR){
+  if(infoL.type!==infoR.type||infoL.type==="none"||infoL.type==="offline") return null;
+  const lesL=infoL.lesson,lesR=infoR.lesson;
+  const ktL=lesL.keyText||{},ktR=lesR.keyText||{};
+  const B=[];
+  B.push({type:"kick",l:lesL.header||"",r:lesR.header||""});
+  B.push({type:"title",l:lesL.title||"",r:lesR.title||""});
+  const mL=cleanMem(ktL.text||lesL.keyTextVerse||""),mR=cleanMem(ktR.text||lesR.keyTextVerse||"");
+  if(mL||mR) B.push({type:"mem",l:mL,lr:(ktL.ref&&ktL.ref.text)||"",r:mR,rr:(ktR.ref&&ktR.ref.text)||""});
+  if(infoL.type==="sabbath"){
+    B.push({type:"section",l:WORD.sabbath[leftLang],r:WORD.sabbath[rightLang]});
+    const nL=(lesL.keyNote&&lesL.keyNote.text)||"",nR=(lesR.keyNote&&lesR.keyNote.text)||"";
+    if(nL||nR) B.push({type:"note",l:nL,r:nR});
+    const rL=readingText(lesL),rR=readingText(lesR);
+    if(rL||rR) B.push({type:"reading",l:rL,r:rR});
+    return B;
   }
-  const day=info.day;
-  if(day.sectionTitle) h+='<div class="section">'+esc(day.sectionTitle.trim())+'</div>';
-  for(const sub of day.subsections||[]){
-    h+='<div class="qa">';
-    for(const q of sub.q||[]){
-      if(q.sOsis) h+='<div class="vref">'+esc((q.text||"").trim())+'</div><div class="verse">'+verseHtml(books,q.sOsis)+'</div>';
-      else if(q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
+  const dL=infoL.day,dR=infoR.day;
+  if(dL.sectionTitle||dR.sectionTitle) B.push({type:"section",l:(dL.sectionTitle||"").trim(),r:(dR.sectionTitle||"").trim()});
+  const subsL=dL.subsections||[],subsR=dR.subsections||[];
+  for(let i=0;i<subsL.length;i++){
+    const sL=subsL[i],sR=subsR[i]||{};
+    const qL=sL.q||[],qR=sR.q||[];
+    for(let j=0;j<qL.length;j++){
+      const q=qL[j];
+      if(q.sOsis) B.push({type:"verse",sOsis:q.sOsis,lr:(q.text||"").trim(),rr:((qR[j]&&qR[j].text)||"").trim()});
+      else if(q.text) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});
     }
-    for(const q of sub.question||[]) if(q&&q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
-    for(const n of sub.note||[]) if(n&&n.text) h+='<div class="note">'+esc(n.text)+'</div>';
-    h+='</div>';
+    const nL=sL.note||[],nR=sR.note||[];
+    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
+    if(i<subsL.length-1) B.push({type:"divider"});
   }
-  for(const q of day.reviewQuestions||[]) if(q) h+='<div class="review">'+esc(q)+'</div>';
-  return h;
+  const rvL=dL.reviewQuestions||[],rvR=dR.reviewQuestions||[];
+  for(let j=0;j<rvL.length;j++) if(rvL[j]) B.push({type:"review",l:rvL[j],r:rvR[j]||""});
+  return B;
+}
+
+// One cell (side = 'l' | 'r'); verse cells render a placeholder filled async
+function cellHtml(b,side,vid){
+  const t=b[side]||"";
+  if(b.type==="kick") return '<div class="kick">'+esc(t)+'</div>';
+  if(b.type==="title") return '<div class="title">'+esc(t)+'</div>';
+  if(b.type==="section") return '<div class="section">'+esc(t)+'</div>';
+  if(b.type==="q") return '<div class="q">'+esc(t)+'</div>';
+  if(b.type==="review") return t?'<div class="review">'+esc(t)+'</div>':'';
+  if(b.type==="note") return t?'<div class="note">'+esc(t)+'</div>':'';
+  if(b.type==="reading") return t?'<div class="reading">'+t+'</div>':'';
+  if(b.type==="mem"){ if(!t) return ''; const ref=side==="l"?b.lr:b.rr;
+    return '<div class="mem"><div class="l">'+esc(WORD.key[side==="l"?leftLang:rightLang])+'</div><div class="t">'+esc(t)+'</div>'+(ref?'<div class="r">'+esc(ref)+'</div>':'')+'</div>';}
+  if(b.type==="verse"){ const ref=side==="l"?b.lr:b.rr;
+    return '<div class="vref">'+esc(ref)+'</div><div class="verse loading" id="'+vid+'">…</div>';}
+  return '';
 }
 function fmtDate(d,l){try{return new Intl.DateTimeFormat(LOCALE[l],{weekday:"long",day:"numeric",month:"long"}).format(d);}catch(e){return ymd(d);}}
 
@@ -239,15 +274,38 @@ let token=0;
 async function render(){
   const my=++token;
   const isToday=sameDay(current,new Date());
-  document.getElementById("eyebrow").textContent=WORD.eyebrow[leftLang];
+  var _eb=document.getElementById("eyebrow"); if(_eb)_eb.textContent=WORD.eyebrow[leftLang];
   document.getElementById("date-d").textContent=fmtDate(current,leftLang);
   document.getElementById("date").classList.toggle("today",isToday);
   document.getElementById("date-s").textContent=isToday?WORD.today[leftLang]:String(current.getFullYear());
   buildSegs();
   const cols=document.getElementById("cols"); cols.innerHTML='<div class="msg">&hellip;</div>';
-  const [li,ri,lb,rb]=await Promise.all([findDay(current,leftLang),findDay(current,rightLang),loadBible(BIBLE[leftLang]),loadBible(BIBLE[rightLang])]);
+
+  // lessons are small → structure appears at once; verses fill in after
+  const [li,ri]=await Promise.all([findDay(current,leftLang),findDay(current,rightLang)]);
   if(my!==token) return;
-  cols.innerHTML='<div class="col">'+columnHtml(li,leftLang,lb&&lb.books)+'</div><div class="col">'+columnHtml(ri,rightLang,rb&&rb.books)+'</div>';
+  const blocks=buildBlocks(li,ri);
+  if(!blocks){ cols.innerHTML='<div class="msg">'+esc(WORD.none[leftLang])+'</div>'; return; }
+
+  let html="",vid=0; const tasks=[];
+  for(const b of blocks){
+    if(b.type==="divider"){ html+='<div class="rowdiv"></div>'; continue; }
+    const idL="vl"+vid,idR="vr"+vid; vid++;
+    html+='<div class="cell '+b.type+'">'+cellHtml(b,"l",idL)+'</div>';
+    html+='<div class="cell '+b.type+'">'+cellHtml(b,"r",idR)+'</div>';
+    if(b.type==="verse"){ tasks.push([idL,b.sOsis,leftLang]); tasks.push([idR,b.sOsis,rightLang]); }
+  }
+  cols.innerHTML=html;
+
+  for(const [id,sOsis,lng] of tasks){
+    loadBible(BIBLE[lng]).then((bib)=>{
+      if(my!==token) return;
+      const el=document.getElementById(id); if(!el) return;
+      const h=verseHtml(bib&&bib.books,sOsis);
+      el.classList.remove("loading");
+      if(h){ el.innerHTML=h; } else { el.classList.add("error"); el.textContent="—"; }
+    });
+  }
 }
 function buildSegs(){
   for(const [id,cur,set] of [["seg-left",leftLang,setLeft],["seg-right",rightLang,setRight]]){
