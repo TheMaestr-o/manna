@@ -169,10 +169,11 @@ footer .fl{color:var(--gilt);font-size:12px;margin-bottom:8px}
   Content &copy; <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> &middot;
   Bible text from SDARM editions &middot; by
   <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
-  <div class="editions"><a href="index.html">Dark edition &#8594;</a></div>
+  <div class="editions"><a href="index.html">Light</a> &nbsp;·&nbsp; <a href="dark.html">Dark</a> &nbsp;·&nbsp; <span style="color:var(--gilt)">Illuminated</span></div>
 </footer>
 
 <script>
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 const LANGS=["de","en","ru"];
 const LOCALE={de:"de-DE",en:"en-US",ru:"ru-RU"};
 const BIBLE={de:"de-lut",en:"en-kjv",ru:"ru-rst"};
