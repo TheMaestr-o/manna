@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MANNA — Sabbath Bible Lesson · diglot</title>
+<meta name="description" content="The daily Sabbath Bible Lesson as an illuminated diglot — two languages side by side, on parchment.">
+<style>
+:root{
+  --paper:#e7dabb; --paper2:#ded0ad; --edge:#c9b78c;
+  --ink:#3a2c1a; --ink-soft:#5c4a30; --faint:#8c7852;
+  --rubric:#8f2c1d; --rubric-dk:#6f2013;
+  --gilt:#a67c26; --gilt-hi:#caa246;
+  --rule:#bfa877;
+  --serif:"Iowan Old Style","Hoefler Text","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:17px;line-height:1.6;
+  background:
+    radial-gradient(140% 120% at 20% 0%, #efe4c8, transparent 55%),
+    radial-gradient(120% 120% at 100% 100%, #d7c69f, transparent 50%),
+    #e7dabb;
+  min-height:100vh;
+}
+/* paper grain + vignette */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;mix-blend-mode:multiply;opacity:.42;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(130% 100% at 50% 42%, transparent 52%, rgba(58,44,26,.20))}
+.wrap,header,.controls,footer{position:relative;z-index:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+a{color:var(--rubric);text-decoration:none;border-bottom:1px solid rgba(143,44,29,.3)}
+a:hover{color:var(--rubric-dk)}
+
+/* incipit */
+header{text-align:center;padding:60px 0 0}
+.incipit{color:var(--rubric);font-size:12px;letter-spacing:5px;text-transform:uppercase;font-variant:small-caps;margin-bottom:14px}
+.wordmark{font-size:64px;font-weight:700;letter-spacing:9px;padding-left:9px;line-height:1;color:var(--gilt);
+  text-shadow:0 1px 0 rgba(255,247,220,.6),0 2px 3px rgba(90,60,20,.25)}
+.orn{display:flex;align-items:center;justify-content:center;gap:16px;margin:20px 0 10px;color:var(--gilt)}
+.orn .ln{width:120px;height:0;border-top:1px solid var(--rule);border-bottom:1px solid rgba(255,247,220,.5)}
+.orn .fl{font-size:15px}
+.subt{color:var(--ink-soft);font-size:13px;letter-spacing:2px;font-variant:small-caps}
+
+/* controls */
+.controls{position:sticky;top:0;z-index:8;margin-top:32px;
+  background:linear-gradient(180deg,rgba(231,218,187,.94),rgba(231,218,187,.8));backdrop-filter:blur(4px);
+  border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)}
+.controls .row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px 22px;padding:14px 30px;max-width:1180px;margin:0 auto}
+.daynav{display:flex;align-items:center;gap:8px}
+.arrow{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;
+  border:1px solid var(--edge);background:rgba(255,250,235,.5);color:var(--rubric);font-size:22px;cursor:pointer;user-select:none;transition:.18s}
+.arrow:hover{background:var(--rubric);color:var(--paper);border-color:var(--rubric)}
+.date{min-width:216px;text-align:center;cursor:pointer;padding:4px 10px;border-radius:8px;transition:.18s}
+.date:hover{background:rgba(255,250,235,.5)}
+.date .d{font-size:19px;font-weight:600;text-transform:capitalize;color:var(--ink)}
+.date .s{font-size:10px;letter-spacing:2.5px;color:var(--faint);margin-top:1px;font-variant:small-caps}
+.date.today .s{color:var(--rubric);font-weight:700}
+.pickset{display:flex;align-items:center;gap:9px}
+.pk-label{font-size:11px;letter-spacing:1px;color:var(--faint);font-variant:small-caps}
+.seg{display:flex;border:1px solid var(--edge);border-radius:8px;overflow:hidden;background:rgba(255,250,235,.4)}
+.seg .o{padding:8px 13px;font-size:13px;font-weight:700;letter-spacing:.5px;color:var(--ink-soft);cursor:pointer;transition:.15s;font-variant:small-caps}
+.seg .o:hover{color:var(--ink)}
+.seg .o.active{background:var(--rubric);color:var(--paper)}
+.swap{width:38px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;
+  border:1px solid var(--edge);background:rgba(255,250,235,.4);color:var(--rubric);cursor:pointer;font-size:16px;transition:.18s}
+.swap:hover{background:var(--rubric);color:var(--paper)}
+
+/* columns — codex */
+.cols{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:46px 0 90px}
+.cols::before{content:"";position:absolute;top:14px;bottom:56px;left:50%;width:0;
+  border-left:1px solid var(--rule);border-right:1px solid rgba(255,247,220,.5);transform:translateX(-1px)}
+.col{min-width:0}
+.msg{grid-column:1/-1;text-align:center;color:var(--faint);padding:90px 20px;font-size:19px;font-style:italic}
+
+.kick{color:var(--rubric);font-size:12px;letter-spacing:1.5px;font-variant:small-caps;font-weight:700;margin-bottom:6px}
+.title{font-size:31px;font-weight:600;line-height:1.15;color:var(--ink);margin-bottom:22px}
+.title .versal{color:var(--gilt);font-weight:700}
+
+.mem{margin:0 0 30px;padding:2px 2px 2px 0}
+.mem .l{color:var(--rubric);font-size:11px;letter-spacing:1.5px;font-variant:small-caps;font-weight:700;margin-bottom:8px}
+.mem .t{font-size:20px;line-height:1.5;color:var(--ink)}
+.mem .t .versal{float:left;font-size:3.2em;line-height:.78;color:var(--gilt);font-weight:700;
+  margin:7px 12px 0 0;text-shadow:0 1px 0 rgba(255,247,220,.6)}
+.mem .r{color:var(--rubric);font-size:13px;font-variant:small-caps;letter-spacing:.5px;margin-top:10px;clear:both}
+
+.section{color:var(--rubric);font-size:13px;letter-spacing:1.5px;font-variant:small-caps;font-weight:700;
+  display:flex;align-items:center;gap:14px;margin:10px 0 22px}
+.section::after{content:"";flex:1;height:0;border-top:1px solid var(--rule)}
+
+.qa{margin-bottom:6px}
+.qa:not(:last-child)::after{content:"\2766";display:block;text-align:center;color:var(--gilt);font-size:17px;margin:24px 0}
+.q{font-size:18.5px;font-weight:600;line-height:1.48;color:var(--ink);margin-bottom:12px}
+.vref{color:var(--rubric);font-size:12px;letter-spacing:.5px;font-variant:small-caps;font-weight:700;margin-bottom:5px}
+.verse{font-size:18.5px;line-height:1.68;color:var(--ink);padding:2px 0 2px 16px;border-left:2px solid var(--gilt);margin-bottom:12px}
+.vnum{color:var(--rubric);font-weight:700;font-size:12px;vertical-align:5px;margin:0 4px 0 1px}
+.note{position:relative;font-size:16px;line-height:1.62;color:var(--ink-soft);padding-left:24px;margin-top:13px}
+.note::before{content:"\00B6";position:absolute;left:0;top:0;color:var(--rubric);font-weight:700;font-size:17px}
+.review{font-size:17.5px;color:var(--ink);line-height:1.5;margin-bottom:14px}
+.reading{font-size:16px;color:var(--ink-soft);margin-top:12px;font-style:italic}
+.reading b{font-style:normal;color:var(--ink)}
+
+footer{text-align:center;color:var(--faint);font-size:13px;padding:28px 0 46px;border-top:1px solid var(--edge)}
+footer .fl{color:var(--gilt);font-size:12px;margin-bottom:8px}
+.editions{margin-top:8px;font-size:12px;font-variant:small-caps;letter-spacing:1px}
+
+@media (prefers-reduced-motion:no-preference){
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes ink{from{opacity:0}to{opacity:1}}
+  header>*{animation:fadeUp .7s both}
+  .incipit{animation-delay:.02s}.wordmark{animation-delay:.08s}.orn{animation-delay:.16s}.subt{animation-delay:.22s}
+  .controls{animation:fadeUp .6s .24s both}
+  .col{animation:ink .8s both}
+  .col:nth-child(2){animation-delay:.12s}
+  .col .kick{animation:fadeUp .5s .04s both}
+  .col .title{animation:fadeUp .55s .1s both}
+  .col .mem{animation:fadeUp .6s .18s both}
+  .col .section{animation:fadeUp .55s .24s both}
+  .col .qa{animation:fadeUp .55s .3s both}
+  .col .qa:nth-of-type(2){animation-delay:.4s}
+  .col .qa:nth-of-type(n+3){animation-delay:.48s}
+  .arrow,.swap,.seg .o,.date{transition:.18s}
+}
+@media (max-width:840px){
+  .cols{grid-template-columns:1fr;gap:0}
+  .cols::before{display:none}
+  .col{border-bottom:1px solid var(--edge);padding-bottom:30px;margin-bottom:26px}
+  .col:last-child{border-bottom:none}
+  .wordmark{font-size:44px;letter-spacing:6px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="incipit">Sabbatschullektion &middot; Диглот</div>
+  <div class="wordmark">MANNA</div>
+  <div class="orn"><span class="ln"></span><span class="fl">&#10086;</span><span class="ln"></span></div>
+  <div class="subt">two tongues, one Word &middot; side by side</div>
+</header>
+
+<div class="controls">
+  <div class="row">
+    <div class="daynav">
+      <div class="arrow" id="prev" title="Previous day">&lsaquo;</div>
+      <div class="date" id="date" title="Jump to today"><div class="d" id="date-d">&mdash;</div><div class="s" id="date-s"></div></div>
+      <div class="arrow" id="next" title="Next day">&rsaquo;</div>
+    </div>
+    <div class="pickset">
+      <span class="pk-label">Left</span>
+      <div class="seg" id="seg-left"></div>
+      <div class="swap" id="swap" title="Swap sides">&#8646;</div>
+      <span class="pk-label">Right</span>
+      <div class="seg" id="seg-right"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="cols" id="cols"><div class="msg">&hellip;</div></div>
+</div>
+
+<footer>
+  <div class="fl">&#10022;</div>
+  Content &copy; <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> &middot;
+  Bible text from SDARM editions &middot; by
+  <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
+  <div class="editions"><a href="index.html">Dark edition &#8594;</a></div>
+</footer>
+
+<script>
+const LANGS=["de","en","ru"];
+const LOCALE={de:"de-DE",en:"en-US",ru:"ru-RU"};
+const BIBLE={de:"de-lut",en:"en-kjv",ru:"ru-rst"};
+const WORD={
+  key:{de:"Leittext",en:"Key Text",ru:"Памятный стих"},
+  sabbath:{de:"Sabbat",en:"Sabbath",ru:"Суббота"},
+  today:{de:"HEUTE",en:"TODAY",ru:"СЕГОДНЯ"},
+  none:{de:"Für diesen Tag gibt es keine Lektion.",en:"No lesson for this day.",ru:"На этот день урока нет."}
+};
+let leftLang=localStorage.getItem("manna.web.left")||"de";
+let rightLang=localStorage.getItem("manna.web.right")||"ru";
+if(leftLang===rightLang) rightLang=leftLang==="de"?"ru":"de";
+let current=new Date();
+const quarters={},bibles={};
+
+function ymd(d){return d.getFullYear()+("0"+(d.getMonth()+1)).slice(-2)+("0"+d.getDate()).slice(-2);}
+function sameDay(a,b){return ymd(a)===ymd(b);}
+function qOf(d){return Math.floor(d.getMonth()/3)+1;}
+function addDays(d,n){const x=new Date(d.getTime());x.setDate(x.getDate()+n);return x;}
+function neigh(y,q){return[[y,q],q===1?[y-1,4]:[y,q-1],q===4?[y+1,1]:[y,q+1]];}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function cleanMem(t){return String(t||"")
+  .replace(/^\s*[\p{Lu}][\p{Lu}\s]{2,}[:：]\s*/u,"")
+  .replace(/^[\s„“"«‚‹]+/,"").replace(/[”"»›]+\s*$/,"").trim();}
+function versal(s){const m=s.match(/\p{L}/u);if(!m)return esc(s);const i=m.index;
+  return esc(s.slice(0,i))+'<span class="versal">'+esc(s.slice(i,i+1))+'</span>'+esc(s.slice(i+1));}
+
+async function loadQuarter(l,y,q){
+  const key=l+"-"+y+"-"+q; if(quarters[key]) return quarters[key];
+  try{const r=await fetch("https://app.sdarm.org/sbl/data/"+l+"/"+l+"-"+y+"-"+q+".json");if(!r.ok)throw 0;return quarters[key]=await r.json();}
+  catch(e){return quarters[key]=null;}
+}
+async function findDay(d,l){
+  const t=ymd(d);
+  for(const[y,q]of neigh(d.getFullYear(),qOf(d))){
+    const data=await loadQuarter(l,y,q); if(!data||!data.lessons) continue;
+    for(const les of data.lessons){
+      if(les.date===t) return {type:"sabbath",lesson:les};
+      for(const day of les.dailyLessons||[]) if(day.date===t) return {type:"day",lesson:les,day};
+    }
+  }
+  return {type:"none"};
+}
+function loadBible(v){ if(bibles[v]) return bibles[v];
+  return bibles[v]=fetch("https://app.sdarm.org/bible/data/"+v+".json").then(r=>r.json()).catch(e=>{bibles[v]=null;return null;}); }
+function parseSeg(s){const d=s.split("-");const a=d[0].split(".");const b=(d[1]||d[0]).split(".");
+  return{book:a[0],chap:+a[1],v1:+a[2],echap:+(b[1]||a[1]),v2:+(b[2]||a[2])};}
+function verseHtml(books,sOsis){let out="";
+  for(const raw of String(sOsis).split(",")){
+    const s=parseSeg(raw.trim());const ch=books&&books[s.book];if(!ch)continue;
+    for(let c=s.chap;c<=s.echap;c++){const vs=ch[c-1];if(!vs)continue;
+      const from=c===s.chap?s.v1:1,to=c===s.echap?s.v2:vs.length;
+      for(let n=from;n<=to;n++) if(vs[n-1]!=null) out+='<span class="vnum">'+n+'</span>'+esc(String(vs[n-1]).trim())+" ";
+    }
+  }
+  return out.trim();
+}
+function columnHtml(info,l,books){
+  if(info.type==="none") return '<div class="msg">'+esc(WORD.none[l])+'</div>';
+  const les=info.lesson;
+  const title=les.title||"";
+  let h='<div class="kick">'+esc(les.header||"")+'</div><div class="title">'+(title?versal(title):"")+'</div>';
+  const kt=les.keyText||{};const kText=cleanMem(kt.text||les.keyTextVerse||"");const kRef=(kt.ref&&kt.ref.text)||"";
+  if(kText) h+='<div class="mem"><div class="l">'+esc(WORD.key[l])+'</div><div class="t">'+versal(kText)+'</div>'+(kRef?'<div class="r">'+esc(kRef)+'</div>':'')+'</div>';
+  if(info.type==="sabbath"){
+    h+='<div class="section">'+esc(WORD.sabbath[l])+'</div>';
+    if(les.keyNote&&les.keyNote.text) h+='<div class="note">'+esc(les.keyNote.text)+'</div>';
+    const rd=les.reading; if(rd&&rd.reading&&rd.reading.length) h+='<div class="reading"><b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ")+'</div>';
+    return h;
+  }
+  const day=info.day;
+  if(day.sectionTitle) h+='<div class="section">'+esc(day.sectionTitle.trim())+'</div>';
+  for(const sub of day.subsections||[]){
+    h+='<div class="qa">';
+    for(const q of sub.q||[]){
+      if(q.sOsis) h+='<div class="vref">'+esc((q.text||"").trim())+'</div><div class="verse">'+verseHtml(books,q.sOsis)+'</div>';
+      else if(q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
+    }
+    for(const q of sub.question||[]) if(q&&q.text) h+='<div class="q">'+esc(q.text.trim())+'</div>';
+    for(const n of sub.note||[]) if(n&&n.text) h+='<div class="note">'+esc(n.text)+'</div>';
+    h+='</div>';
+  }
+  for(const q of day.reviewQuestions||[]) if(q) h+='<div class="review">'+esc(q)+'</div>';
+  return h;
+}
+function fmtDate(d,l){try{return new Intl.DateTimeFormat(LOCALE[l],{weekday:"long",day:"numeric",month:"long"}).format(d);}catch(e){return ymd(d);}}
+
+let token=0;
+async function render(){
+  const my=++token;
+  const isToday=sameDay(current,new Date());
+  document.getElementById("date-d").textContent=fmtDate(current,leftLang);
+  document.getElementById("date").classList.toggle("today",isToday);
+  document.getElementById("date-s").textContent=isToday?WORD.today[leftLang]:String(current.getFullYear());
+  buildSegs();
+  const cols=document.getElementById("cols"); cols.innerHTML='<div class="msg">&hellip;</div>';
+  const [li,ri,lb,rb]=await Promise.all([findDay(current,leftLang),findDay(current,rightLang),loadBible(BIBLE[leftLang]),loadBible(BIBLE[rightLang])]);
+  if(my!==token) return;
+  cols.innerHTML='<div class="col">'+columnHtml(li,leftLang,lb&&lb.books)+'</div><div class="col">'+columnHtml(ri,rightLang,rb&&rb.books)+'</div>';
+}
+function buildSegs(){
+  for(const [id,cur,set] of [["seg-left",leftLang,setLeft],["seg-right",rightLang,setRight]]){
+    const el=document.getElementById(id);
+    el.innerHTML=LANGS.map(x=>'<div class="o'+(x===cur?' active':'')+'" data-l="'+x+'">'+x.toUpperCase()+'</div>').join("");
+    el.querySelectorAll(".o").forEach(o=>o.onclick=()=>set(o.dataset.l));
+  }
+}
+function setLeft(l){if(l===leftLang)return;if(l===rightLang)rightLang=leftLang;leftLang=l;save();render();}
+function setRight(l){if(l===rightLang)return;if(l===leftLang)leftLang=rightLang;rightLang=l;save();render();}
+function save(){localStorage.setItem("manna.web.left",leftLang);localStorage.setItem("manna.web.right",rightLang);}
+
+document.getElementById("prev").onclick=()=>{current=addDays(current,-1);render();};
+document.getElementById("next").onclick=()=>{current=addDays(current,1);render();};
+document.getElementById("date").onclick=()=>{current=new Date();render();};
+document.getElementById("swap").onclick=()=>{const t=leftLang;leftLang=rightLang;rightLang=t;save();render();};
+
+render();
+</script>
+</body>
+</html>
