@@ -199,6 +199,7 @@ function qOf(d){return Math.floor(d.getMonth()/3)+1;}
 function addDays(d,n){const x=new Date(d.getTime());x.setDate(x.getDate()+n);return x;}
 function neigh(y,q){return[[y,q],q===1?[y-1,4]:[y,q-1],q===4?[y+1,1]:[y,q+1]];}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function strip(s){return String(s==null?"":s).replace(/<[^>]*>/g,"");}
 function cleanMem(t){return String(t||"")
   .replace(/^\s*[\p{Lu}][\p{Lu}\s]{2,}[:：]\s*/u,"")
   .replace(/^[\s„“"«‚‹]+/,"").replace(/[”"»›]+\s*$/,"").trim();}
@@ -267,7 +268,7 @@ function fmtDate(d,l){try{return new Intl.DateTimeFormat(LOCALE[l],{weekday:"lon
 
 
 function readingText(les){const rd=les.reading;
-  if(rd&&rd.reading&&rd.reading.length) return '<b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ");
+  if(rd&&rd.reading&&rd.reading.length) return '<b>'+esc(strip(rd.label||""))+'</b> '+rd.reading.map(x=>esc(strip(x.label||""))).join("; ");
   return "";}
 function buildBlocks(infoL,infoR){
   if(infoL.type!==infoR.type||infoL.type==="none"||infoL.type==="offline") return null;
@@ -305,7 +306,7 @@ function cellHtml(b,side,vid){
   if(b.type==="section") return '<div class="section">'+esc(t)+'</div>';
   if(b.type==="q") return '<div class="q">'+esc(t)+'</div>';
   if(b.type==="review") return t?'<div class="review">'+esc(t)+'</div>':'';
-  if(b.type==="note") return t?'<div class="note">'+esc(t)+'</div>':'';
+  if(b.type==="note") return t?'<div class="note">'+esc(strip(t))+'</div>':'';
   if(b.type==="reading") return t?'<div class="reading">'+t+'</div>':'';
   if(b.type==="mem"){ if(!t) return ''; const ref=side==="l"?b.lr:b.rr;
     return '<div class="mem"><div class="l">'+esc(WORD.key[side==="l"?leftLang:rightLang])+'</div><div class="t">'+versal(t)+'</div>'+(ref?'<div class="r">'+esc(ref)+'</div>':'')+'</div>';}
