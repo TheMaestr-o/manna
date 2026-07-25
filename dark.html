@@ -71,10 +71,14 @@ header{text-align:center;padding:64px 0 0}
 .swap:hover{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--on-gold)}
 
 /* ---------------- columns ---------------- */
-.cols{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:44px 0 90px}
+.cols{position:relative;display:grid;grid-template-columns:1fr 1fr;column-gap:56px;row-gap:0;align-items:start;padding:44px 0 90px}
 .cols::before{content:"";position:absolute;top:20px;bottom:60px;left:50%;width:1px;transform:translateX(-.5px);
   background:linear-gradient(180deg,transparent,var(--gold-dk) 12%,var(--gold-dk) 88%,transparent)}
 .col{min-width:0}
+.cell{min-width:0}.cell>*:last-child{margin-bottom:0}
+.rowdiv{grid-column:1/-1;height:1px;background:var(--hair);margin:16px 0 34px}
+.verse.loading{opacity:.55}
+.verse.error{color:#c98}
 .msg{grid-column:1 / -1;text-align:center;color:var(--faint);padding:90px 20px;font-family:var(--serif);font-size:18px}
 .msg.err{color:#c98}
 
@@ -276,6 +280,55 @@ function columnHtml(info,l,books){
 }
 function fmtDate(d,l){try{return new Intl.DateTimeFormat(LOCALE[l],{weekday:"long",day:"numeric",month:"long"}).format(d);}catch(e){return ymd(d);}}
 
+
+function readingText(les){const rd=les.reading;
+  if(rd&&rd.reading&&rd.reading.length) return '<b>'+esc(rd.label||"")+'</b> '+rd.reading.map(x=>esc(x.label||"")).join("; ");
+  return "";}
+function buildBlocks(infoL,infoR){
+  if(infoL.type!==infoR.type||infoL.type==="none"||infoL.type==="offline") return null;
+  const lesL=infoL.lesson,lesR=infoR.lesson,ktL=lesL.keyText||{},ktR=lesR.keyText||{},B=[];
+  B.push({type:"kick",l:lesL.header||"",r:lesR.header||""});
+  B.push({type:"title",l:lesL.title||"",r:lesR.title||""});
+  const mL=cleanMem(ktL.text||lesL.keyTextVerse||""),mR=cleanMem(ktR.text||lesR.keyTextVerse||"");
+  if(mL||mR) B.push({type:"mem",l:mL,lr:(ktL.ref&&ktL.ref.text)||"",r:mR,rr:(ktR.ref&&ktR.ref.text)||""});
+  if(infoL.type==="sabbath"){
+    B.push({type:"section",l:WORD.sabbath[leftLang],r:WORD.sabbath[rightLang]});
+    const nL=(lesL.keyNote&&lesL.keyNote.text)||"",nR=(lesR.keyNote&&lesR.keyNote.text)||"";
+    if(nL||nR) B.push({type:"note",l:nL,r:nR});
+    const rL=readingText(lesL),rR=readingText(lesR); if(rL||rR) B.push({type:"reading",l:rL,r:rR});
+    return B;
+  }
+  const dL=infoL.day,dR=infoR.day;
+  if(dL.sectionTitle||dR.sectionTitle) B.push({type:"section",l:(dL.sectionTitle||"").trim(),r:(dR.sectionTitle||"").trim()});
+  const subsL=dL.subsections||[],subsR=dR.subsections||[];
+  for(let i=0;i<subsL.length;i++){
+    const sL=subsL[i],sR=subsR[i]||{},qL=sL.q||[],qR=sR.q||[];
+    for(let j=0;j<qL.length;j++){const q=qL[j];
+      if(q.sOsis) B.push({type:"verse",sOsis:q.sOsis,lr:(q.text||"").trim(),rr:((qR[j]&&qR[j].text)||"").trim()});
+      else if(q.text) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});}
+    const nL=sL.note||[],nR=sR.note||[];
+    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
+    if(i<subsL.length-1) B.push({type:"divider"});}
+  const rvL=dL.reviewQuestions||[],rvR=dR.reviewQuestions||[];
+  for(let j=0;j<rvL.length;j++) if(rvL[j]) B.push({type:"review",l:rvL[j],r:rvR[j]||""});
+  return B;
+}
+function cellHtml(b,side,vid){
+  const t=b[side]||"";
+  if(b.type==="kick") return '<div class="kick">'+esc(t)+'</div>';
+  if(b.type==="title") return '<div class="title">'+esc(t)+'</div>';
+  if(b.type==="section") return '<div class="section">'+esc(t)+'</div>';
+  if(b.type==="q") return '<div class="q">'+esc(t)+'</div>';
+  if(b.type==="review") return t?'<div class="review">'+esc(t)+'</div>':'';
+  if(b.type==="note") return t?'<div class="note">'+esc(t)+'</div>':'';
+  if(b.type==="reading") return t?'<div class="reading">'+t+'</div>':'';
+  if(b.type==="mem"){ if(!t) return ''; const ref=side==="l"?b.lr:b.rr;
+    return '<div class="mem"><div class="l">'+esc(WORD.key[side==="l"?leftLang:rightLang])+'</div><div class="t">'+esc(t)+'</div>'+(ref?'<div class="r">'+esc(ref)+'</div>':'')+'</div>';}
+  if(b.type==="verse"){ const ref=side==="l"?b.lr:b.rr;
+    return '<div class="vref">'+esc(ref)+'</div><div class="verse loading" id="'+vid+'">…</div>';}
+  return '';
+}
+
 let token=0;
 async function render(){
   const my=++token;
@@ -285,9 +338,24 @@ async function render(){
   document.getElementById("date-s").textContent=isToday?WORD.today[leftLang]:String(current.getFullYear());
   buildSegs();
   const cols=document.getElementById("cols"); cols.innerHTML='<div class="msg">Loading&hellip;</div>';
-  const [li,ri,lb,rb]=await Promise.all([findDay(current,leftLang),findDay(current,rightLang),loadBible(BIBLE[leftLang]),loadBible(BIBLE[rightLang])]);
+  const [li,ri]=await Promise.all([findDay(current,leftLang),findDay(current,rightLang)]);
   if(my!==token) return;
-  cols.innerHTML='<div class="col">'+columnHtml(li,leftLang,lb&&lb.books)+'</div><div class="col">'+columnHtml(ri,rightLang,rb&&rb.books)+'</div>';
+  const blocks=buildBlocks(li,ri);
+  if(!blocks){ cols.innerHTML='<div class="msg">'+esc(WORD.none[leftLang])+'</div>'; return; }
+  let html="",vid=0; const tasks=[];
+  for(const b of blocks){
+    if(b.type==="divider"){ html+='<div class="rowdiv"></div>'; continue; }
+    const idL="vl"+vid,idR="vr"+vid; vid++;
+    html+='<div class="cell '+b.type+'">'+cellHtml(b,"l",idL)+'</div>';
+    html+='<div class="cell '+b.type+'">'+cellHtml(b,"r",idR)+'</div>';
+    if(b.type==="verse"){ tasks.push([idL,b.sOsis,leftLang]); tasks.push([idR,b.sOsis,rightLang]); }
+  }
+  cols.innerHTML=html;
+  for(const t of tasks){ const id=t[0],sOsis=t[1],lng=t[2];
+    loadBible(BIBLE[lng]).then(function(bib){ if(my!==token) return; const el=document.getElementById(id); if(!el) return;
+      const h=verseHtml(bib&&bib.books,sOsis); el.classList.remove("loading");
+      if(h){el.innerHTML=h;}else{el.classList.add("error");el.textContent="—";} });
+  }
 }
 function buildSegs(){
   for(const [id,cur,set] of [["seg-left",leftLang,setLeft],["seg-right",rightLang,setRight]]){
