@@ -5,10 +5,11 @@ in **two languages in parallel** — with the full Bible text, pulled live from 
 
 **Live:** https://themaestr-o.github.io/manna/
 
-**Three editions:**
+**Four editions:**
 - **Light** (editorial, primary) — https://themaestr-o.github.io/manna/
 - **Dark** (gold on black) — https://themaestr-o.github.io/manna/dark.html
 - **Illuminated** (parchment diglot) — https://themaestr-o.github.io/manna/codex.html
+- **Print** (original booklet layout) — https://themaestr-o.github.io/manna/print.html
 
 Loads once, then instant — a service worker caches the lesson and Bible data (works offline after the first visit).
 

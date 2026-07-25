@@ -173,7 +173,7 @@ footer .fl{color:var(--gilt);font-size:12px;margin-bottom:8px}
   Content &copy; <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> &middot;
   Bible text from SDARM editions &middot; by
   <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
-  <div class="editions"><a href="index.html">Light</a> &nbsp;·&nbsp; <a href="dark.html">Dark</a> &nbsp;·&nbsp; <span style="color:var(--gilt)">Illuminated</span></div>
+  <div class="editions"><a href="index.html">Light</a> &nbsp;·&nbsp; <a href="dark.html">Dark</a> &nbsp;·&nbsp; <span style="color:var(--gilt)">Illuminated</span> &nbsp;·&nbsp; <a href="print.html">Print</a></div>
 </footer>
 
 <script>
@@ -200,9 +200,8 @@ function addDays(d,n){const x=new Date(d.getTime());x.setDate(x.getDate()+n);ret
 function neigh(y,q){return[[y,q],q===1?[y-1,4]:[y,q-1],q===4?[y+1,1]:[y,q+1]];}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function strip(s){return String(s==null?"":s).replace(/<[^>]*>/g,"");}
-function cleanMem(t){return String(t||"")
-  .replace(/^\s*[\p{Lu}][\p{Lu}\s]{2,}[:：]\s*/u,"")
-  .replace(/^[\s„“"«‚‹]+/,"").replace(/[”"»›]+\s*$/,"").trim();}
+function cleanMem(t){t=String(t||"").trim();var qi=t.search(/[„“"«]/);if(qi>0&&qi<=42){var ci=t.lastIndexOf(":",qi);if(ci>=0&&ci<qi)t=t.slice(ci+1).trim();}return t;}
+function isJunk(s){return /out of date|install the (new|latest) version|Google Play|App ?store|version installed on your device/i.test(String(s||""));}
 function versal(s){const m=s.match(/\p{L}/u);if(!m)return esc(s);const i=m.index;
   return esc(s.slice(0,i))+'<span class="versal">'+esc(s.slice(i,i+1))+'</span>'+esc(s.slice(i+1));}
 
@@ -291,9 +290,9 @@ function buildBlocks(infoL,infoR){
     const sL=subsL[i],sR=subsR[i]||{},qL=sL.q||[],qR=sR.q||[];
     for(let j=0;j<qL.length;j++){const q=qL[j];
       if(q.sOsis) B.push({type:"verse",sOsis:q.sOsis,lr:(q.text||"").trim(),rr:((qR[j]&&qR[j].text)||"").trim()});
-      else if(q.text) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});}
+      else if(q.text&&!isJunk(q.text)) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});}
     const nL=sL.note||[],nR=sR.note||[];
-    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
+    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text&&!isJunk(nL[j].text)) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
     if(i<subsL.length-1) B.push({type:"divider"});}
   const rvL=dL.reviewQuestions||[],rvR=dR.reviewQuestions||[];
   for(let j=0;j<rvL.length;j++) if(rvL[j]) B.push({type:"review",l:rvL[j],r:rvR[j]||""});

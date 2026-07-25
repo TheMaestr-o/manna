@@ -128,7 +128,7 @@ footer a{color:var(--tan-dk)}
       <div class="pickset"><span class="pk-label">Left</span><div class="seg" id="seg-left"></div>
         <div class="swap" id="swap" title="Swap sides">&#8646;</div>
         <span class="pk-label">Right</span><div class="seg" id="seg-right"></div></div>
-      <div class="editions"><span class="cur">Light</span><a href="dark.html">Dark</a><a href="codex.html">Illuminated</a></div>
+      <div class="editions"><span class="cur">Light</span><a href="dark.html">Dark</a><a href="codex.html">Illuminated</a><a href="print.html">Print</a></div>
     </div>
   </div>
 </nav>
@@ -147,7 +147,7 @@ footer a{color:var(--tan-dk)}
 </div>
 
 <footer>
-  <div class="foot-ed"><span class="cur">Light</span><a href="dark.html">Dark</a><a href="codex.html">Illuminated</a></div>
+  <div class="foot-ed"><span class="cur">Light</span><a href="dark.html">Dark</a><a href="codex.html">Illuminated</a><a href="print.html">Print</a></div>
   Content &copy; <a href="https://sdarm.org" target="_blank" rel="noopener">Seventh Day Adventist Reform Movement</a> &middot;
   Bible text from SDARM editions &middot; an independent reader by
   <a href="https://github.com/TheMaestr-o" target="_blank" rel="noopener">Sergio</a>
@@ -179,7 +179,8 @@ function addDays(d,n){const x=new Date(d.getTime());x.setDate(x.getDate()+n);ret
 function neigh(y,q){return[[y,q],q===1?[y-1,4]:[y,q-1],q===4?[y+1,1]:[y,q+1]];}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function strip(s){return String(s==null?"":s).replace(/<[^>]*>/g,"");}
-function cleanMem(t){return String(t||"").replace(/^\s*[\p{Lu}][\p{Lu}\s]{2,}[:：]\s*/u,"").trim();}
+function cleanMem(t){t=String(t||"").trim();var qi=t.search(/[„“"«]/);if(qi>0&&qi<=42){var ci=t.lastIndexOf(":",qi);if(ci>=0&&ci<qi)t=t.slice(ci+1).trim();}return t;}
+function isJunk(s){return /out of date|install the (new|latest) version|Google Play|App ?store|version installed on your device|Sabbath Bible Lessons\" app|search for \"SDARM\"/i.test(String(s||""));}
 
 async function loadQuarter(l,y,q){
   const key=l+"-"+y+"-"+q; if(quarters[key]) return quarters[key];
@@ -242,10 +243,10 @@ function buildBlocks(infoL,infoR){
     for(let j=0;j<qL.length;j++){
       const q=qL[j];
       if(q.sOsis) B.push({type:"verse",sOsis:q.sOsis,lr:(q.text||"").trim(),rr:((qR[j]&&qR[j].text)||"").trim()});
-      else if(q.text) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});
+      else if(q.text&&!isJunk(q.text)) B.push({type:"q",l:q.text.trim(),r:((qR[j]&&qR[j].text)||"").trim()});
     }
     const nL=sL.note||[],nR=sR.note||[];
-    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
+    for(let j=0;j<nL.length;j++) if(nL[j]&&nL[j].text&&!isJunk(nL[j].text)) B.push({type:"note",l:nL[j].text,r:((nR[j]&&nR[j].text)||"")});
     if(i<subsL.length-1) B.push({type:"divider"});
   }
   const rvL=dL.reviewQuestions||[],rvR=dR.reviewQuestions||[];
